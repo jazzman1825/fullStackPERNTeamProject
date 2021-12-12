@@ -7,7 +7,11 @@ const path = require("path");
 app.use(express.json());
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, "client")));
+app.use(express.static(path.join(__dirname, "Frontend/build")));
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, "Frontend/build")));
+}
 
 const restaurantsRouter = require("./routes/restaurants");
 app.use("/restaurant", restaurantsRouter);
@@ -23,6 +27,10 @@ app.use("/order", ordersRouter);
 
 const authRouter = require("./routes/jwtAuth");
 app.use("/auth", authRouter);
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "Frontend/build/index.html"));
+});
 
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);

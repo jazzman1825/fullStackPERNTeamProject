@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:4000/restaurant'
+const baseUrl = '/restaurant'
 
 let token = null
 
@@ -27,7 +27,7 @@ const create = async (newObject) => {
 const update = async (newObject) => {
     const config = { headers: { Authorization: token } }
 
-    const res = await axios.put(`http://localhost:4000/manager/restaurant`, newObject, config)
+    const res = await axios.put(`/manager/restaurant`, newObject, config)
     return res.data;
 }
 

@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:4000/order'
+const baseUrl = '/order'
 
 let token = null
 
@@ -28,7 +28,7 @@ const create = async (newObject) => {
 
 const sendDetails = async (newObject) => {
     const config = { headers: { Authorization: token } }
-    const url = 'http://localhost:4000/order/details'
+    const url = '/order/details'
 
     const res = await axios.post(url, newObject, config);
     return res.data;
