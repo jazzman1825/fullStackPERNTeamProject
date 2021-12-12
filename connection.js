@@ -9,10 +9,19 @@ const devConfig = {
     port: process.env.PG_PORT
 }
 
-const proConfig = {
+const prodConfig = {
     connectionString: process.env.DATABASE_URL
 }
 
-const pool = new Pool(process.env.NODE_ENV === 'production' ? proConfig : devConfig);
+const pool = process.env.NODE_ENV === "production"
+    ? new Pool({
+        connectionString: prodConfig,
+        ssl: {
+        rejectUnauthorized: false
+        }
+    })
+    : new Pool({
+        connectionString: devConfig,
+    });
 
 module.exports = pool;
