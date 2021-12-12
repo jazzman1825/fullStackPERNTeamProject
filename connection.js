@@ -9,13 +9,9 @@ const devConfig = {
     port: process.env.PG_PORT
 }
 
-const prodConfig = {
-    connectionString: process.env.DATABASE_URL
-}
-
 const pool = process.env.NODE_ENV === "production"
     ? new Pool({
-        connectionString: prodConfig,
+        connectionString: process.env.DATABASE_URL,
         ssl: {
         rejectUnauthorized: false
         }
