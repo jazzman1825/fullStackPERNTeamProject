@@ -46,19 +46,6 @@ const TableHeader = styled.th`
     padding: 15px;
 `;
 
-const bottomRow = styled.div`
-    justify-items: flex-start;
-`;
-
-const orderButton = styled.button`
-    font-family: 'Muli', sans-serif;
-    font-variant: small-caps;
-    font-style: italic;
-    font-size: 22px;
-    color: black;
-    border: 1px solid black;
-`;
-
 const TextInput = styled.input`
     width: 300px;
     height: 32px;
@@ -216,14 +203,12 @@ const ShoppingCart = ({ AddToCart, RemoveFromCart, cartProducts, setCartProducts
                                 <TableHeader></TableHeader>
                             </tr>
                             {cartProducts.map(p =>
-                            <><tr key={p.product_id}>
+                                <tr key={p.product_id}>
                                     <td><ProductImage src={p.src} alt={p.name}></ProductImage></td>
                                     <td> {p.name} </td>
                                     <td><DecreaseQty onClick={()=>RemoveFromCart(p)}>-</DecreaseQty> {p.qty} <IncreaseQty onClick={()=>AddToCart(p)}> + </IncreaseQty> </td>
                                     <td> {p.price} $</td>
-                                    {/* <td> {totalPrice.toFixed(2)} </td> */}
                                 </tr>
-                                </>
                                 )}
                                 <tr>
                                     <th></th>

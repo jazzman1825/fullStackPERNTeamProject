@@ -80,7 +80,7 @@ function App() {
           "name": "Cart"
         },
         {
-          "path": "/manager/restaurant",
+          "path": "/manager",
           "name": "Managers"
         }
       ])
@@ -130,11 +130,11 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage restaurants={restaurants} />} />
           <Route path="/restaurants" element={<RestaurantsPage restaurants={restaurants} />} />
-          <Route path="/restaurant/:restaurantId" element={<RestaurantMenuPage AddToCart={AddToCart} message={message} />} />
+          <Route path="/restaurants/:restaurantId" element={<RestaurantMenuPage AddToCart={AddToCart} message={message} />} />
           <Route path="/about" element={<AboutPage />} />
           { user && <Route path="/account" element={<AccountPage />} /> }
           { user && <Route path="/cart" element={<ShoppingCart AddToCart={AddToCart} RemoveFromCart={RemoveFromCart} cartProducts={cartProducts} setCartProducts={setCartProducts} isConsumer={isConsumer} />} /> }
-          { user && <Route path="/manager/restaurant" element={<ManagerPage setNavLinks={setNavLinks} restaurants={restaurants} setRestaurants={setRestaurants} />} /> }
+          { user && <Route path="/manager" element={<ManagerPage restaurants={restaurants} setRestaurants={setRestaurants} />} /> }
           <Route path="*" element={<EmptyPage /> } />
         </Routes>
       </UserContext.Provider>

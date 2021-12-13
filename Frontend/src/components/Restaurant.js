@@ -91,7 +91,7 @@ const RestaurantPricelvl = styled.div`
 const Restaurant = (props) => {
     return (
         <RestaurantItem>
-            <RestaurantLink to={`/restaurant/${props.id}`}>
+            <RestaurantLink to={`/restaurants/${props.id}`}>
                 <RestaurantFigure>
                     <RestaurantImage src={props.src} alt={props.name}></RestaurantImage>
                 </RestaurantFigure>

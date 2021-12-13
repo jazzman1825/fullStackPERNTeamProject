@@ -124,7 +124,7 @@ const Modal = ({ showModal, setShowModal, setNavLinks, setIsConsumer }) => {
                   "name": "Cart"
                 },
                 {
-                  "path": "/manager/restaurant",
+                  "path": "/manager",
                   "name": "Managers"
                 }
             ])
