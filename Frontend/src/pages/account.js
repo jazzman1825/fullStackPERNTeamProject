@@ -255,7 +255,7 @@ const AccountPage = () => {
                 {completedOrders.map(o =>
                     <OrderContent key={o.order_id} >
                         <Order><b>{o.order_time}</b> <p>{o.order_address}</p> <p>{o.order_price}€</p> </Order>
-                        {showButton &&<Button onClick={() => handleDetails(o)} disabled={disableButton} >Show details</Button> }
+                        {showButton &&<Button onClick={() => handleDetails(o)} >Show details</Button> }
                     </OrderContent>   
                 )}
             </OrderContainer>
