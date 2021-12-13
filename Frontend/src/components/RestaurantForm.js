@@ -176,12 +176,12 @@ const RestaurantForm = ({ restaurants, setRestaurants, setShowRestaurantForm, se
     const [ operatingHours, setOperatingHours ] = useState("")
     const [ operatingHours2, setOperatingHours2 ] = useState("")
     const [ type, setType ] = useState("Buffet")
-    const [ priceLevel, setPriceLevel ] = useState("€")
+    const [ priceLevel, setPriceLevel ] = useState("$")
     const [ errorMessage, setErrorMessage ] = useState(null)
     const { user } = useContext(UserContext)
 
     const typeOptions = ["Buffet", "Fast food", "Fast casual", "Casual dining", "Fine dining"]
-    const pricelvlOptions = ["€", "€€", "€€€", "€€€€"]
+    const pricelvlOptions = ["$", "$$", "$$$", "$$$$"]
 
     const clearForm = () => {
         setName("")
