@@ -38,12 +38,13 @@ router.get("/:id", async (req, res) => {
 router.post("/", authorize, async (req, res) => {
   try {
     const { restaurant_id, customer_id, order_time, order_status, order_price, order_address } = req.body;
+    const etc = "30"
     const newOrder = await pool.query
     (`
-    INSERT INTO orders (restaurant_id, customer_id, order_time, order_status, order_price, order_address)
-    VALUES ($1, $2, $3, $4, $5, $6)
+    INSERT INTO orders (restaurant_id, customer_id, order_time, order_status, order_price, order_address, order_etc)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
     RETURNING *`,
-    [restaurant_id, customer_id, order_time, order_status, order_price, order_address]);
+    [restaurant_id, customer_id, order_time, order_status, order_price, order_address, etc]);
     res.json(newOrder.rows[0]); 
   } catch (err) {
     console.error(err.message)  
@@ -68,10 +69,10 @@ router.post("/details", authorize, async (req, res) => {
 // Update order status
 router.put("/", authorize, async (req, res) => {
   try {
-    const { order_id, order_status } = req.body;
+    const { order_id, order_status, order_etc } = req.body;
     const updatedOrder = await pool.query(
-        `UPDATE orders SET order_status = $1 WHERE order_id = $2 RETURNING *`,
-        [order_status, order_id]
+        `UPDATE orders SET order_status = $1, order_etc = $2 WHERE order_id = $3 RETURNING *`,
+        [order_status, order_etc, order_id]
     );
     res.json(updatedOrder.rows[0]);
   } catch (err) {

@@ -143,9 +143,11 @@ const AccountPage = () => {
     const [ message, setMessage ] = useState(null)
     const [ isAdmin, setIsAdmin ] = useState(false)
     const [ status, setStatus ] = useState("Preparing")
+    const [ time, setTime ] = useState("25")
     const { user } = useContext(UserContext)
 
     const statusOptions = ["Preparing", "Ready for delivery", "Delivering"]
+    const timeOptions = ["25", "20", "15", "10", "5"]
 
     useEffect(() => {
         orderService
@@ -179,7 +181,7 @@ const AccountPage = () => {
     }
 
     const handleStatusChange = (order) => {
-        const orderObject = { order_id: order.order_id, order_status: status}
+        const orderObject = { order_id: order.order_id, order_status: status, order_etc: time}
 
         orderService
         .update(orderObject)
@@ -225,14 +227,21 @@ const AccountPage = () => {
             <OrderContainer>
                 {ordersInProgress.map(o =>
                     <OrderContent key={o.order_id} >
-                        <Order><b>Status:</b> {o.order_status} <p>{o.order_address}</p> <p>{o.order_price}€</p></Order>
+                        <Order><b>Status:</b> {o.order_status} <p><b>Estimated time of completion:</b> {o.order_etc} min</p> <p>{o.order_address}</p> <p>{o.order_price}$</p></Order>
                         {showButton && <Button onClick={() => handleDetails(o)}>Show details</Button> }
                         {isAdmin &&
-                            <Dropdown value={status} onChange={(e) => setStatus(e.target.value)}>
-                                {statusOptions.map((o, idx) =>
-                                    <DropdownItem key={idx} value={o} >{o}</DropdownItem>    
-                                )}
-                            </Dropdown>
+                            <div>
+                                <Dropdown value={status} onChange={(e) => setStatus(e.target.value)}>
+                                    {statusOptions.map((o, idx) =>
+                                        <DropdownItem key={idx} value={o} >{o}</DropdownItem>    
+                                    )}
+                                </Dropdown>
+                                <Dropdown value={time} onChange={(e) => setTime(e.target.value)} >
+                                    {timeOptions.map((o, idx) =>
+                                        <DropdownItem key={idx} value={o} >{o}</DropdownItem>
+                                    )}
+                                </Dropdown> min
+                            </div>
                         }
                         {!isAdmin 
                         ? <StatusButton onClick={() => handleDelivered(o)} >Confirm the order as delivered</StatusButton>
@@ -245,7 +254,7 @@ const AccountPage = () => {
                 <OrderContainer>
                     <HistoryHeader>Order details:</HistoryHeader>
                     {orderDetails.map((d, index) => 
-                        <li key={index}>{d.product_name} {d.product_price}€ </li>    
+                        <li key={index}>{d.product_name} {d.product_price}$ </li>    
                     )}
                     <CloseButton onClick={handleDetailClose} >Close details</CloseButton>
                 </OrderContainer>
@@ -254,7 +263,7 @@ const AccountPage = () => {
             <OrderContainer>
                 {completedOrders.map(o =>
                     <OrderContent key={o.order_id} >
-                        <Order><b>{o.order_time}</b> <p>{o.order_address}</p> <p>{o.order_price}€</p> </Order>
+                        <Order><b>{o.order_time}</b> <p>{o.order_address}</p> <p>{o.order_price}$</p> </Order>
                         {showButton &&<Button onClick={() => handleDetails(o)} >Show details</Button> }
                     </OrderContent>   
                 )}

@@ -84,7 +84,7 @@ const Product = (props) => {
                 <ProductName>{props.name}</ProductName>
                 <ProductDescription>{props.description}</ProductDescription>
                 <ProductBuyInfo>
-                    <ProductPrice>€{props.price}</ProductPrice>
+                    <ProductPrice>${props.price}</ProductPrice>
                     <ShoppingCartLogo onClick={()=>props.AddToCart(props)} />
                 </ProductBuyInfo>
             </ProductContent>
