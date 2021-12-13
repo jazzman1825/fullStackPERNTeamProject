@@ -217,8 +217,8 @@ const ShoppingCart = ({ AddToCart, RemoveFromCart, cartProducts, setCartProducts
                                     <th>{totalPrice.toFixed(2)}$</th>
                                 </tr>
                                 <tr>
-                                    <th> <TextInput type="text" placeholder="Delivery address" onChange={(e) => setAddress(e.target.value)} /></th>    
-                                    <th> <TextInput type="number" placeholder="Credit card number" onChange={(e) => setCardNumber(e.target.value)} /></th>
+                                    <th> <TextInput type="text" value={address} placeholder="Delivery address" onChange={(e) => setAddress(e.target.value)} /></th>    
+                                    <th> <TextInput type="number" value={cardNumber} placeholder="Credit card number" onChange={(e) => setCardNumber(e.target.value)} /></th>
                                     <th> </th>
                                     <th><SubmitButton onClick={handleOrderSend} >Place your order</SubmitButton></th>
                                 </tr>

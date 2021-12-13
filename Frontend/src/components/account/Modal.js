@@ -100,7 +100,6 @@ const Modal = ({ showModal, setShowModal, setNavLinks, setIsConsumer }) => {
             restaurantService.setToken(user.token)
             productService.setToken(user.token)
             orderService.setToken(user.token)
-            console.log(user)
             setUser(user)
             handleModalClose()
             setNavLinks([

@@ -25,7 +25,9 @@ router.get("/", authorize, async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const orderDetails = await pool.query
-    (`SELECT * FROM order_contents, products WHERE order_id = ${req.params.id} `);
+    (`SELECT product_name, product_price FROM orders JOIN order_contents ON orders.oder_id = order_contents.order_key
+     JOIN products ON products.product_id = order_contents.product_key 
+     WHERE order_id = ${req.params.id} `);
     res.json(orderDetails.rows)
   } catch (err) {
     console.error(err.message)  

@@ -88,6 +88,26 @@ const StatusButton = styled.button`
     }
 `;
 
+const CloseButton = styled.button`
+    width: 120px;
+    border-radius: 100px;
+    background: rgb(205, 0, 0);
+    white-space: nowrap;
+    padding: 7px 0px;
+    margin-top: 10px;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    border: none; 
+    cursor: pointer;
+    transition: all, 240ms ease-in-out;
+
+    &:hover {
+        transition: all 0.2s ease-in-out;
+        filter: brightness(1.2);
+    }
+`;
+
 const Message = styled.div`
     padding: 10px 60px;
     border: 2px inset black;
@@ -119,7 +139,7 @@ const AccountPage = () => {
     const [ orders, setOrders ] = useState([])
     const [ showDetails, setShowDetails ] = useState(false)
     const [ orderDetails, setOrderDetails ] = useState([])
-    const [ disableButton, setDisableButton ] = useState(false)
+    const [ showButton, setShowButton ] = useState(true)
     const [ message, setMessage ] = useState(null)
     const [ isAdmin, setIsAdmin ] = useState(false)
     const [ status, setStatus ] = useState("Preparing")
@@ -174,17 +194,28 @@ const AccountPage = () => {
 
     // Customer or Manager wants to check the products of a specific order
     const handleDetails = (order) => {
-        setShowDetails(!showDetails)
+        setShowButton(false)
+        setShowDetails(true)
 
-        if (showDetails) {
-            setDisableButton(true)
+        try {
             orderService
             .getDetails(order.order_id)
             .then(returnedOrderDetails => {
                 setOrderDetails(returnedOrderDetails)
-                setDisableButton(false)
             })
-        }
+                
+        } catch (err) {
+            console.error(err)
+            setMessage("Couldn't get the order details!")
+            setTimeout(() => {
+                setMessage(null)
+            }, 3000)  
+        }        
+    }
+
+    const handleDetailClose = () => {
+        setShowDetails(false)
+        setShowButton(true)
     }
 
     return (
@@ -194,8 +225,8 @@ const AccountPage = () => {
             <OrderContainer>
                 {ordersInProgress.map(o =>
                     <OrderContent key={o.order_id} >
-                        <Order>Status: {o.order_status} {o.order_time} {o.order_address}  {o.order_price}€</Order>
-                        <Button onClick={() => handleDetails(o)}>Show details</Button>
+                        <Order><b>Status:</b> {o.order_status} <p>{o.order_address}</p> <p>{o.order_price}€</p></Order>
+                        {showButton && <Button onClick={() => handleDetails(o)}>Show details</Button> }
                         {isAdmin &&
                             <Dropdown value={status} onChange={(e) => setStatus(e.target.value)}>
                                 {statusOptions.map((o, idx) =>
@@ -214,16 +245,17 @@ const AccountPage = () => {
                 <OrderContainer>
                     <HistoryHeader>Order details:</HistoryHeader>
                     {orderDetails.map((d, index) => 
-                        <div key={index}>{d.order_name} </div>    
+                        <li key={index}>{d.product_name} {d.product_price}€ </li>    
                     )}
+                    <CloseButton onClick={handleDetailClose} >Close details</CloseButton>
                 </OrderContainer>
             }
             <HistoryHeader>Order history</HistoryHeader>
             <OrderContainer>
                 {completedOrders.map(o =>
                     <OrderContent key={o.order_id} >
-                        <Order>{o.order_time} {o.order_address} {o.order_price}€ </Order>
-                        <Button onClick={() => handleDetails(o)} disabled={disableButton} >Show details</Button>
+                        <Order><b>{o.order_time}</b> <p>{o.order_address}</p> <p>{o.order_price}€</p> </Order>
+                        {showButton &&<Button onClick={() => handleDetails(o)} disabled={disableButton} >Show details</Button> }
                     </OrderContent>   
                 )}
             </OrderContainer>
